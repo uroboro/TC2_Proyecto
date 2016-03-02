@@ -92,6 +92,7 @@ static ModulatorData md;
 @synthesize centerFrequency;
 @synthesize deltaFrequency;
 @synthesize modulatorData;
+@synthesize amplitude;
 
 - (id)initWithMode:(int)mode {
 	if ((self = [super init])) {

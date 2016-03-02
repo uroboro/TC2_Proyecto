@@ -51,6 +51,8 @@ OSStatus ToneRenderer(
 
 	NSUInteger syncFrequency = centerFrequency - freqs[channelIndex];
 
+	amplitude = (generator.amplitude > 0 && generator.amplitude < 10) ? generator.amplitude : amplitude;
+
 	static unsigned char tick = 0;
 	static char bit_p = 0;
 	char bit = (tick / transferSpeed) % 2;

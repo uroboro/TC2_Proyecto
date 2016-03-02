@@ -30,6 +30,9 @@ static NSDictionary *UFSSomeDictionary();
 @property (nonatomic, retain) IBOutlet UISegmentedControl *syncControl;
 - (void)setSyncFrequency:(NSInteger)n;
 
+@property (nonatomic, retain) IBOutlet UISlider *amplitudeSlider;
+@property (nonatomic, retain) IBOutlet UILabel *amplitudeLabel;
+
 @property (nonatomic, retain) IBOutlet UIButton *actionButton;
 @property (nonatomic, retain) UFSGenericTableViewController *viewControllerToPresent;
 
@@ -99,6 +102,7 @@ static NSDictionary *UFSSomeDictionary();
 		UISlider *slider = [[UISlider alloc] initWithFrame:frame];
 		slider.value = 0.5;
 		[slider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+		slider.tag = 1;
 		[self sliderChanged:slider];
 		slider;
 	})];
@@ -125,6 +129,27 @@ static NSDictionary *UFSSomeDictionary();
 			switchView;
 		})];
 	}
+
+	[self.view addSubview:_amplitudeSlider = ({
+		CGRect frame = CGRectMake(r.size.width / 32, 360, r.size.width * 23 / 32, 20);
+		UISlider *slider = [[UISlider alloc] initWithFrame:frame];
+		slider.value = 0.25;
+		slider.minimumValue = 0.1;
+		slider.maximumValue = 5;
+		[slider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+		slider.tag = 2;
+		[self sliderChanged:slider];
+		slider;
+	})];
+	[self.view addSubview:_amplitudeLabel = ({
+		CGRect frame = CGRectMake(r.size.width * 25 / 32, 360, r.size.width * 6 / 32, 20);
+		UILabel *label = [[UILabel alloc] initWithFrame:frame];
+		label.textAlignment = NSTextAlignmentRight;
+		label.text = @"0.25";
+		label.textColor = [UIColor whiteColor];
+		label.backgroundColor = [UIColor clearColor];
+		label;
+	})];
 }
 
 - (id)init {
@@ -182,8 +207,16 @@ static NSDictionary *UFSSomeDictionary();
 }
 
 - (IBAction)sliderChanged:(UISlider *)slider {
-	_transferLabel.text = [NSString stringWithFormat:@"%.01f%%", 100 * slider.value];
-	_toneGenerator.transferSpeed = slider.value;
+	switch(slider.tag){
+	case 1:
+		_transferLabel.text = [NSString stringWithFormat:@"%.01f%%", 100 * slider.value];
+		_toneGenerator.transferSpeed = slider.value;
+	break;
+	case 2:
+		_amplitudeLabel.text = [NSString stringWithFormat:@"%.01f", slider.value];
+		_toneGenerator.amplitude = slider.value;
+	break;
+	}
 }
 
 - (IBAction)switchChanged:(UISwitch *)switchView {
@@ -210,7 +243,7 @@ static NSDictionary *UFSSomeDictionary();
 - (void)getPreferences {
 	NSIndexPath *indexPath;
 	NSString *string;
- 	_toneGenerator.channelCount = [_viewControllerToPresent.dataSource numberOfRowsInSection:0];
+	_toneGenerator.channelCount = [_viewControllerToPresent.dataSource numberOfRowsInSection:0];
 	for (size_t i = 0; i < 4 && i < _toneGenerator.channelCount; i++) {
 		indexPath = [NSIndexPath indexPathForRow:i inSection:0];
 

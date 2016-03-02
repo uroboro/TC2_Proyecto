@@ -21,6 +21,7 @@ typedef struct ModulatorData {
 @property (nonatomic, assign) NSInteger centerFrequency;
 @property (nonatomic, assign) NSInteger deltaFrequency;
 @property (nonatomic, assign) ModulatorData *modulatorData;
+@property (nonatomic, assign) CGFloat amplitude;
 
 @end
 
