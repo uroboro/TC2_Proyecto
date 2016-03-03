@@ -135,7 +135,7 @@ static NSDictionary *UFSSomeDictionary();
 		UISlider *slider = [[UISlider alloc] initWithFrame:frame];
 		slider.value = 0.25;
 		slider.minimumValue = 0.1;
-		slider.maximumValue = 5;
+		slider.maximumValue = 0.6;
 		[slider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
 		slider.tag = 2;
 		[self sliderChanged:slider];
